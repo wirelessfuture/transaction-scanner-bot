@@ -49,5 +49,12 @@ def remove_address(update: Update, context: CallbackContext) -> None:
 def get_address_list(update: Update, context: CallbackContext) -> None:
     """Returns the current addresslist to the user."""
     addresses = db.get_addresses()
+    addresses_to_message = []
     if len(addresses) > 0:
-        pass
+        for address in addresses:
+            for key, value in vars(address).items():
+                addresses_to_message.append(f'{key.upper()}: {value}\n')
+        message = ''.join(addresses_to_message)
+        update.message.reply_text(message)
+    else:
+        update.message.reply_text('There are no addresses saved!')
