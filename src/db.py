@@ -4,11 +4,12 @@ from entities import Address
 
 
 class InMemoryDB:
-    def __init__(self):
+    def __init__(self, last_block: int):
         self.addresslist = []
+        self.last_block = last_block
 
     def get_addresses(self) -> List[Address]:
-        return addresslist
+        return self.addresslist
 
     def add_address(self, address: Address) -> None:
         if isinstance(address, Address):

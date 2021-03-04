@@ -8,14 +8,15 @@ class Address:
 
 @dataclass
 class Transaction:
-    txhash: string
+    txhash: str
     block_height: int
     timestamp: int
     nonce: int
-    from_address: string
-    to_address: string
+    from_address: str
+    to_address: str
     value: int
     gas_price: int
-    tx_input: string
+    gas_used: int
+    tx_input: str
     position_in_block: int
     is_error: bool

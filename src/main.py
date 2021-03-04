@@ -1,8 +1,10 @@
 import os
 import logging
+import time
 
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
+import schedule
+
+from telegram.ext import Updater, CommandHandler
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -13,6 +15,8 @@ from commands import (
     remove_address,
     get_address_list
 )
+
+from worker import check_for_transactions
 
 # Enable logging
 logging.basicConfig(
@@ -40,10 +44,12 @@ def main():
     # Start the Bot
     updater.start_polling()
 
-    # Block until you press Ctrl-C or the process receives SIGINT, SIGTERM or
-    # SIGABRT. This should be used most of the time, since start_polling() is
-    # non-blocking and will stop the bot gracefully.
-    updater.idle()
+    # Schedule the worker task
+    schedule.every(2).minutes.do(check_for_transactions)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
 
 if __name__ == '__main__':

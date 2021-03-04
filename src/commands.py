@@ -1,16 +1,15 @@
-from typing import List
-
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 
-from validators import is_address
+from helpers import is_address, on_message
 from entities import Address
 
-from db import InMemoryDB
-db = InMemoryDB()
+from init_db import db
+
 
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
+@on_message
 def start(update: Update, context: CallbackContext) -> None:
     """Inform users how to use the bot."""
     update.message.reply_text(
@@ -19,6 +18,7 @@ def start(update: Update, context: CallbackContext) -> None:
         'Use /watchlist to see the current watchlist'
     )
 
+@on_message
 def add_address(update: Update, context: CallbackContext) -> None:
     """Add an address to the watchlist."""
     try:
@@ -34,6 +34,7 @@ def add_address(update: Update, context: CallbackContext) -> None:
     except (IndexError, ValueError):
         update.message.reply_text('Usage: /add <address> <name>')
 
+@on_message
 def remove_address(update: Update, context: CallbackContext) -> None:
     """Remove the address if the user changed their mind."""
     try:
@@ -44,6 +45,7 @@ def remove_address(update: Update, context: CallbackContext) -> None:
     except (IndexError, ValueError):
         update.message.reply_text('Usage: /remove <name>')
 
+@on_message
 def get_address_list(update: Update, context: CallbackContext) -> None:
     """Returns the current addresslist to the user."""
     addresses = db.get_addresses()
