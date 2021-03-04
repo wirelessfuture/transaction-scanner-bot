@@ -16,7 +16,7 @@ from commands import (
     get_address_list
 )
 
-from worker import check_for_transactions
+from worker import worker
 
 # Enable logging
 logging.basicConfig(
@@ -45,7 +45,7 @@ def main():
     updater.start_polling()
 
     # Schedule the worker task
-    schedule.every(2).minutes.do(check_for_transactions)
+    schedule.every(1).minutes.do(worker)
 
     while True:
         schedule.run_pending()
