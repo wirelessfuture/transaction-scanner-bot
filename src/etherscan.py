@@ -1,6 +1,6 @@
 import os
 
-from typing import List, Dict
+from typing import List, Dict, Union
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -13,29 +13,30 @@ from entities import Transaction
 from helpers import get_latest_block
 
 
-def get_transactions() -> Dict[str, List[Transaction]]:
+def get_transactions() -> Union[Dict[str, List[Transaction]], None]:
     """Check all addresses in db, get all the latest transactions."""
-
     # Iterate through address entities and get tx's from etherscan
     addresses = db.get_addresses()
-    transaction_dict = dict()
+    transaction_dict = {}
     for address in addresses:
         address_to_get_tx = address.address
         from_block = db.last_block
         to_block = 'latest'
         transactions = client.get_all_transactions(
             from_address=address_to_get_tx,
-            status=2, 
+            status=1, 
             from_block=from_block, 
             to_block=to_block, 
             thread_count=1
         )
-        transaction_dict[address_to_get_tx] = list()
-        for tx in transactions:
-            transaction_dict[address_to_get_tx].append(Transaction(**vars(tx)))
+        if transactions != None:
+            transaction_dict[address_to_get_tx] = []
+            for tx in transactions:
+                transaction_dict[address_to_get_tx].append(Transaction(**vars(tx)))
+        else:
+            return None # Return None if no tx are found
 
     # Set the last block
     db.last_block = get_latest_block()
 
     return transaction_dict
-
