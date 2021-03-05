@@ -1,4 +1,5 @@
 import os
+import time
 
 from typing import List, Dict, Union
 
@@ -35,6 +36,7 @@ def get_transactions() -> Union[Dict[str, List[Transaction]], None]:
                 transaction_dict[address_to_get_tx].append(Transaction(**vars(tx)))
         else:
             return None # Return None if no tx are found
+        time.sleep(2)
 
     # Set the last block
     db.last_block = get_latest_block()
