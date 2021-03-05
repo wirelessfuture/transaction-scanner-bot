@@ -44,7 +44,7 @@ def parse_transactions(transactions: Dict[str, List[Transaction]]) -> List[str]:
     
 def send_bot_message(message: str) -> None:
     """Given the message, have the bot send it in."""
-    channel_id = os.getenv("TELEGRAM_CHAT_ID")
+    channel_id = os.getenv("TELEGRAM_GROUP_CHAT_ID")
     bot = Bot(os.getenv("TELEGRAM_BOT_TOKEN"))
     bot.send_message(channel_id, message)
 
