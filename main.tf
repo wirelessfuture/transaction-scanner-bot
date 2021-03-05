@@ -16,8 +16,8 @@ provider "aws" {
 
 # Resources
 # AWS Lightsail instance
-resource "aws_lightsail_instance" "ws_lightsail" {
-  name              = "wallet_scanner_bot"
+resource "aws_lightsail_instance" "ts_lightsail" {
+  name              = "transaction_scanner_bot"
   availability_zone = "eu-central-1a"
   blueprint_id      = "ubuntu_20_04"
   bundle_id         = "micro_2_0"
