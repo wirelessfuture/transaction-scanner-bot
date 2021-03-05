@@ -39,7 +39,8 @@ def parse_transactions(transactions: Dict[str, List[Transaction]]) -> List[str]:
                         tx_data.append(f'{key.upper()}: https://etherscan.io/tx/{value}\n')
                     if key == "timestamp":
                         tx_data.append(f'{key.upper()}: {datetime.utcfromtimestamp(int(value)).strftime("%H:%M:%S")}\n')
-            messages.append(''.join(tx_data.insert(0, f'{address_name.upper()}\n')))
+            tx_data.insert(0, f'{address_name.upper()}\n')
+            messages.append(''.join(tx_data))
 
     return messages
     

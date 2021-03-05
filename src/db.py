@@ -12,12 +12,13 @@ class InMemoryDB:
         return self.addresslist
 
     def get_name_by_address(self, address: str) -> str:
-        return [address for address in self.addresslist if address.address == address][0].name
+        name = [add for add in self.addresslist if add.address == address][0].name
+        return name
 
     def add_address(self, address: Address) -> None:
         if isinstance(address, Address):
             self.addresslist.append(address)
 
     def remove_address(self, name: str) -> None:
-        to_remove = [address for address in self.addresslist if address.name == name][0]
+        to_remove = [add for add in self.addresslist if add.name == name][0]
         self.addresslist.remove(to_remove)
