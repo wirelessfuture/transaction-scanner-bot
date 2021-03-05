@@ -11,6 +11,9 @@ class InMemoryDB:
     def get_addresses(self) -> List[Address]:
         return self.addresslist
 
+    def get_name_by_address(self, address: str) -> str:
+        return [address for address in self.addresslist if address.address == address][0].name
+
     def add_address(self, address: Address) -> None:
         if isinstance(address, Address):
             self.addresslist.append(address)
