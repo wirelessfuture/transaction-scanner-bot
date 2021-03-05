@@ -4,6 +4,9 @@ from datetime import datetime
 
 from typing import Dict, List
 
+from dotenv import load_dotenv
+load_dotenv()
+
 from telegram import Update, Bot
 from telegram.ext import Updater, CommandHandler, CallbackContext
 
@@ -40,11 +43,11 @@ def parse_transactions(transactions: Dict[str, List[Transaction]]) -> List[str]:
     
 def send_bot_message(message: str) -> None:
     """Given the message, have the bot send it in."""
-    channel_id = -571826605
+    channel_id = os.getenv("TELEGRAM_CHAT_ID")
     bot = Bot(os.getenv("TELEGRAM_BOT_TOKEN"))
     bot.send_message(channel_id, message)
 
-def worker():
+def worker() -> None:
     """Main worker that Gets tx, parses them, and sends the messages."""
     new_transactions = get_transactions()
     parsed_messages = parse_transactions(new_transactions)
