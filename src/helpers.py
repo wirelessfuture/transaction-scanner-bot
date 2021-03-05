@@ -19,7 +19,7 @@ def is_address(address: str) -> bool:
 
 def on_message(func: any) -> any:
     """When a message comes in, make sure chat_id is in whitelist."""
-    whitelisted_group = [-571826605, 1327445093] # Hard-coded for now
+    whitelisted_group = [os.getenv("TELEGRAM_GROUP_CHAT_ID"), os.getenv("TELEGRAM_BOT_CHAT_ID")]
     def is_whitelisted(*args, **kwargs):
         if args[0].message.chat_id in whitelisted_group:
             return func(args[0], args[1])
