@@ -21,7 +21,7 @@ resource "aws_lightsail_instance" "ws_lightsail" {
   availability_zone = "eu-central-1a"
   blueprint_id      = "ubuntu_20_04"
   bundle_id         = "micro_2_0"
-  key_pair_name     = "blockchain-frontier-bot"
+  key_pair_name     = "wallet-scanner-bot"
 
   provisioner "file" {
     source      = "launch-script.sh"
