@@ -12,6 +12,7 @@ from telegram.ext import Updater, CommandHandler, CallbackContext
 
 from etherscan import get_transactions
 from entities import Transaction
+from init_db import db
 
 
 def check_for_transactions() -> Dict[str, List[Transaction]]:
